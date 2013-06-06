@@ -1,0 +1,32 @@
+{
+  "name": "backlog",
+  "author": "Jared Wright (http://wrightdev.herokuapp.com/jawerty)",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jawerty/memory.js.git"
+  },
+  "description": "Node module for saving your file changes in a log and recovering your code.",
+  "keywords": [
+    "backlog",
+    "backlog.js",
+    "save",
+    "recover",
+    "changes",
+    "file",
+    "node.js"
+  ],
+  "version": "0.0.1",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "license": "MIT",
+  "dependencies": {
+
+  }
+}
