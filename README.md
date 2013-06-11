@@ -10,7 +10,7 @@ npm install backlog
 
 You can also install by cloning this repository and putting it in the `node_modules` directory of your project.
 
-### Usage
+### Setting it up
 backlog is very simple to use, in just a few lines, you can backup your code.
 
 Require the library by do this 
@@ -33,7 +33,7 @@ backlog.init()
 ```
 Run this file with `node app.js`
 
-This backlog is initiated without a backup save. The logs will be written in a file named 'back.log'. Go to back.log and you'll see something similar to this...
+This backlog is initiated without a backup save. **The settings optional but the .init() function is what actually starts backlog**. The logs will be written in a file named 'back.log'. Go to back.log and you'll see something similar to this...
 
 ```
 `back.log` file output 
@@ -86,6 +86,7 @@ When you run the node.js file again, the output in your log file should now look
   }
 }
 ```
+As you see above, the encoded key has a value of the encoded text of the source file you backed up.
 
 ### Retrieving your backups
 The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code.
@@ -105,6 +106,20 @@ backlog.settings({
 	message: 'This is my code that has this thing in it...'
 });
 ```
+
+## API
+### backup.settings(settings)
+'settings' should be a associative array (dictionary) with three optional keys, backup (set to a boolean), logFile (set to a string), message (set to a string). Setting **must** always be before init()
+
+### backup.init()
+This function is what initiates backlog. Your file should ideally end with it.
+
+### backup.retrieve(key, file)
+This is the function for retrieving the encoded source. Key parameter is the key for the backed up code you want to get back (should be an integer more than 0) and can be a string. file parameter represents the backlog generated log file you want to retrieve the code from.
+
+### backup.clearLog(file)
+This function is simply used for clearing your backlog generated logs.
+
 ## Contact
 If you would like to contact me for further information on the project, see the info below.
 
