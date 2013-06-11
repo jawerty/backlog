@@ -34,6 +34,8 @@ Run this file with `node app.js`
 This backlog is initiated without a backup save. The logs will be written in a file named 'back.log'. Go to back.log and you'll see something similar to this...
 
 ```
+`back.log` file output 
+
 {
   "1": {
     "filename": "app.js",
@@ -45,6 +47,7 @@ This backlog is initiated without a backup save. The logs will be written in a f
 }
 ```
 
+### Backing up the file
 **If you would like to backup the file to retrieve it later use the setting `backup`...see below**
 
 ```
@@ -80,6 +83,7 @@ When you run the node.js file again, the output in your log file should now look
 }
 ```
 
+### Retrieving your backups
 The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code.
 
 ```
@@ -90,6 +94,13 @@ The first parameter of retrieve() is used to resemble the index in your log's js
 
 A new file named 2_app.js, containing your backed up code, will appear in your directory with your original app.js. 
 
+### Change the file name
+```
+backlog.settings({
+	logFile: 'jared.log',
+	message: 'This is my code that has this thing in it...'
+});
+```
 ## Contact
 If you would like to contact me for further information on the project, see the info below.
 
