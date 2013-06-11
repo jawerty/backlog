@@ -89,7 +89,7 @@ When you run the app.js file again with `node`, the output in your log file shou
 As you see above, the encoded key has a value of the encoded text of the source file you backed up.
 
 ### Retrieving your backups
-The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code. **If your backed up code was the 2nd index in the log file, as seen above, then retrieving the code would look like this.
+The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code. **If your backed up code was the 2nd index in the log file, as seen above, then retrieving the code would look like this.**
 
 ```
 backlog.retrieve(2, 'back.log');
