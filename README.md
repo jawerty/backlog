@@ -53,14 +53,14 @@ Use `backup: true` in the settings.
 ```
 //`app.js` file
 
-var backlog = require('backlog')
+var backlog = require('backlog');
 
 backlog.settings({
 	backup: true,
 	message: 'This is my second file change.'
 });
 
-backlog.init()
+backlog.init();
 ```
 
 When you run the app.js file again with `node`, the output in your log file should now look similar to this.

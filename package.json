@@ -15,7 +15,10 @@
     "file",
     "node.js"
   ],
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "jam": {
+    "main": "index.js"
+    },
   "licenses": [
     {
       "type": "MIT",

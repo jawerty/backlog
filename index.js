@@ -6,6 +6,7 @@ var beautify = require('js-beautify').js_beautify;
 var lzma = require("lzma").LZMA();
 
 var backup, excluded;
+var file_name = 'back.log'
 var result = null;
 
 var data = {
@@ -169,6 +170,10 @@ backlog = {
 								delete data['encoded'];								
 							}
 
+							if (fs.existsSync(file) != true){
+								fs.writeFileSync(file, '');
+							} 
+
 					    fs.readFile(file, 'utf8', function (err, fetched_data) {
 								if (err) throw err;
 
@@ -188,6 +193,7 @@ backlog = {
 							      console.log(err);
 							    } else {
 							      //console.log(file + " saved");
+							      console.log(file_name+' running as backlog...')
 							    }
 								});
 								
@@ -197,7 +203,6 @@ backlog = {
 			  });
 		  });
 		})(data, backup);
-   	console.log(file_name+' running as backlog...')
 	}
 	
 };
