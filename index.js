@@ -1,19 +1,17 @@
 var fs = require('fs');
 var sys = require("sys");
-var Step = require('step');
 var async = require('async');
 var dateFormat = require('dateformat');
 var beautify = require('js-beautify').js_beautify;
 var lzma = require("lzma").LZMA();
 
 var backup, excluded;
-var hex = null;
+var result = null;
 
 var data = {
 	filename: null,
 	timestamp: null,
 	message: null,
-	percent_change: null,
 	char_count: null,
 	line_count: null,
 	encoded: null
@@ -60,8 +58,8 @@ backlog = {
 		else
 			delete data['message'];
 
-		if (typeof settingsList.logFileName != 'undefined')
-			file_name = settingsList.logFileName;
+		if (typeof settingsList.logFile != 'undefined')
+			file_name = settingsList.logFile;
 
 		if (settingsList.backup == true)
 			backup = true;
@@ -77,25 +75,49 @@ backlog = {
 				excluded = null;
 	  } 
 	},
-	clear : function(logName) {
 
+	clearLog : function(logName) {
+		fs.readFile(logName, 'utf8', function(err, fetched_data) {
+			if (IsJsonString(fetched_data)) {
+				fs.writeFile(logName, '{}' ,function(err){
+					if (err) throw err;
+				})	
+			} else {
+				console.log('Error: Cannot clear log; make sure the log is in JSON format.')
+			}
+		});
 	},
+
 	retrieve : function(id, file) {
 		fs.readFile(file, 'utf8', function(err, fetched_data){
 			if (IsJsonString(fetched_data)) {
 				parsed_data = JSON.parse(fetched_data);
-				text = hex2a(parsed_data[id.toString()].encoded);
-				fs.writeFile(id.toString()+'_'+process.mainModule.filename.replace(/^.*[\\\/]/, ''), beautify(text, { indent_size: 2 }), function(err){
-					if (err) throw err;
-				});
 
+				if (typeof parsed_data[id.toString()] == 'undefined') {
+					fs.writeFile(id.toString()+'_'+process.mainModule.filename.replace(/^.*[\\\/]/, ''), 'Please make sure the file instance you are trying to receive exists.', function(err){
+						if (err) throw err;
+					});
+
+				} else {
+					if (parsed_data[id.toString()].encoded) {
+						lzma.decompress(parsed_data[id.toString()].encoded.split(','), function(result){
+							fs.writeFile(id.toString()+'_'+process.mainModule.filename.replace(/^.*[\\\/]/, ''), beautify(result, { indent_size: 2 }), function(err){
+								if (err) throw err;
+							});
+						});
+					} else {
+						fs.writeFile(id.toString()+'_'+process.mainModule.filename.replace(/^.*[\\\/]/, ''), "\"\"\"You cannot retrieve a file instance that was not backed up, use 'backup: true' \nas a setting in your backup.settings({}); to backup your file instance.\"\"\"", function(err){
+							if (err) throw err;
+						});
+					}
+				}
 			} else {
 				return null
 			}
 		});
 	},
 	init : function(){
-		file = file_name+'.log' || 'back.log';
+		file = file_name || 'back.log';
 
 		if (Object.prototype.toString.call(excluded) === '[object Array]') {
 			for (i = 0; i<=excluded.length; i++) {
@@ -125,37 +147,27 @@ backlog = {
 			    data['filename'] = process.mainModule.filename;
 			    data['timestamp'] = ts;
 			    if (typeof message != 'undefined') data['message'] = message;
-					data['percent_change'] = null;
 					data['char_count'] = charactercount;
 					data['line_count'] = linecount;
 
 					async.parallel([
 					  function(callback) {
-					    console.log('one')
 					    if (backup == true) {
-						  	lzma.compress(toHex(fetched_data.replace(/\s+/g, ' ')), 1, function(result){
-									console.log('result: '+result)
-									callback()
-									hex = result
+						  	lzma.compress(fetched_data.replace(/\s+/g, ' '), 1, function(result){
+									callback(null, result.join(','));
 								});
 								return;
 						  } else {
-						  	 hex = null 
-						  	 callback()
+						  	 result = null 
+						  	 callback(null, result)
 						  	 return;
 						  }
-					  },
-
-					  function(callback) {
-							console.log('two'+hex)
-					    if (hex != null) {
-							  console.log('second: '+hex)
-								data['encoded'] = hex;
+					  }], function(err, result){
+					    if (result[0] != null) {
+								data['encoded'] = result.join(' ');
 							} else {
-								delete data['encoded'];
+								delete data['encoded'];								
 							}
-
-					  	console.log('three')
 
 					    fs.readFile(file, 'utf8', function (err, fetched_data) {
 								if (err) throw err;
@@ -172,7 +184,7 @@ backlog = {
 								}
 
 						  	fs.writeFile(file, JSON.stringify(final_data, null, 2), function(err) {
-							    if(err) {c
+							    if(err) {
 							      console.log(err);
 							    } else {
 							      //console.log(file + " saved");
@@ -180,14 +192,12 @@ backlog = {
 								});
 								
 							});
-							callback(null, "two")
-						}
-					 ]);
+					  });
 
 			  });
 		  });
 		})(data, backup);
-   
+   	console.log(file_name+' running as backlog...')
 	}
 	
 };

@@ -3,9 +3,9 @@
   "author": "Jared Wright (http://wrightdev.herokuapp.com/jawerty)",
   "repository": {
     "type": "git",
-    "url": "http://github.com/jawerty/memory.js.git"
+    "url": "http://github.com/jawerty/backlog.git"
   },
-  "description": "Node module for saving your file changes in a log and recovering your code.",
+  "description": "Node.js module for logging your file changes and even better saving & recovering your code.",
   "keywords": [
     "backlog",
     "backlog.js",
@@ -30,8 +30,6 @@
     "dateformat": "1.0.6-1.2.3",
     "js-beautify": "1.3.4",
     "lzma": "1.2.3",
-    "step": "0.0.5",
-    "async": "0.2.9",
-    "do": "0.4.0"
+    "async": "0.2.9"
   }
 }
