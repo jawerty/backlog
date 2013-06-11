@@ -50,8 +50,7 @@ This backlog is initiated without a backup save. **The settings optional but the
 ```
 
 ### Backing up the file
-**If you would like to backup the file to retrieve it later use the setting `backup`...see below**
-
+Use `backup: true` in the settings.
 ```
 //`app.js` file
 
@@ -65,7 +64,7 @@ backlog.settings({
 backlog.init()
 ```
 
-When you run the node.js file again, the output in your log file should now look similar to this.
+When you run the app.js file again with `node`, the output in your log file should now look similar to this.
 
 ```
 {
@@ -86,10 +85,11 @@ When you run the node.js file again, the output in your log file should now look
   }
 }
 ```
+
 As you see above, the encoded key has a value of the encoded text of the source file you backed up.
 
 ### Retrieving your backups
-The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code.
+The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code. **If your backed up code was the 2nd index in the log file, as seen above, then retrieving the code would look like this.
 
 ```
 backlog.retrieve(2, 'back.log');
@@ -106,6 +106,7 @@ backlog.settings({
 	message: 'This is my code that has this thing in it...'
 });
 ```
+logFile is a key used to represent the name of your log file, thus replacing the default back.log.
 
 ## API
 ### backup.settings(settings)
