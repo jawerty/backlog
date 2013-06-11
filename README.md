@@ -11,9 +11,9 @@ npm install backlog
 You can also install by cloning this repository and putting it in the `node_modules` directory of your project.
 
 ### Setting it up
-backlog is very simple to use, in just a few lines, you can backup your code.
+backlog is very simple to use. In just a few lines, you can backup your code and retrieve it.
 
-Require the library by do this 
+Use the library with require()
 ```
 var backlog = require('backlog')
 ```
@@ -23,21 +23,20 @@ Next, you must set the settings for backup, there are three options in the setti
 ```
 //`app.js` file
 
-var backlog = require('backlog')
+var backlog = require('backlog');
 
 backlog.settings({
 	message: 'This is my first file change.'
 });
 
-backlog.init()
+backlog.init();
 ```
 Run this file with `node app.js`
 
-This backlog is initiated without a backup save. **The settings optional but the .init() function is what actually starts backlog**. The logs will be written in a file named 'back.log'. Go to back.log and you'll see something similar to this...
+This backlog is initiated without a backup save. **The backlog.settings() function is optional but backlog.init() is required and what initiates backlog**. The logs will be written in a file named 'back.log'. Go to back.log and you'll see something similar to this...
 
-```
 `back.log` file output 
-
+```
 {
   "1": {
     "filename": "app.js",
@@ -86,11 +85,10 @@ When you run the app.js file again with `node`, the output in your log file shou
 }
 ```
 
-As you see above, the encoded key has a value of the encoded text of the source file you backed up.
+As you see above, there is a new index called '2' with a new key. The encoded key has a value of the encoded text of the source file you backed up.
 
 ### Retrieving your backups
 The encoded key is a compressed version of your code. In order to retrieve this code in a new file, you must run this line in your code. **If your backed up code was the 2nd index in the log file, as seen above, then retrieving the code would look like this.**
-
 ```
 backlog.retrieve(2, 'back.log');
 ```
@@ -100,13 +98,14 @@ The first parameter of retrieve() is used to resemble the index in your log's js
 A new file named 2_app.js, containing your backed up code, will appear in your directory with your original app.js. 
 
 ### Change the file name
+logFile is a key used to represent the name of your log file, thus replacing the default back.log.
 ```
 backlog.settings({
 	logFile: 'jared.log',
 	message: 'This is my code that has this thing in it...'
 });
 ```
-logFile is a key used to represent the name of your log file, thus replacing the default back.log.
+
 
 ## API
 ### backup.settings(settings)
