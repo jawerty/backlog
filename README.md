@@ -21,6 +21,8 @@ var backlog = require('backlog')
 Next, you must set the settings for backup, there are three options in the settings: backup, message, and logFile. This file will be called **app.js**
 
 ```
+//`app.js` file
+
 var backlog = require('backlog')
 
 backlog.settings({
@@ -51,6 +53,8 @@ This backlog is initiated without a backup save. The logs will be written in a f
 **If you would like to backup the file to retrieve it later use the setting `backup`...see below**
 
 ```
+//`app.js` file
+
 var backlog = require('backlog')
 
 backlog.settings({
