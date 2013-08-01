@@ -129,7 +129,7 @@ Github: jawerty
 
 Twitter: @jawerty
 
-Blog: <http://wrightdev.herokuapp.com>
+Blog: <http://jawerty.github.io>
 
 ## License
 Licensed under the MIT License
